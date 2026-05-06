@@ -1,0 +1,273 @@
+<!doctype html>
+<!--
+  サブセット対象文字一覧（Noto Sans JP &text= パラメータ用）:
+  日本を拠点に、ひとりで日用のための小さなアプリをつくっています。デザインから実装、運用までを一人で。
+  日常にそっと寄り添うソフトウェアを目指しています。
+  合同会社SAWADA公式サイト運営代表者事業内容連絡先商号
+  問い合わせはメールにてお願いいたします
+  目のストレッチタイマー分ごとにそっと休憩を促しガイドする作業の小さな相棒
+  呼吸法メンタルケア世界中で実践される日本語で体験できるボックス
+-->
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>sawalyno — Building quiet apps for everyday life.</title>
+<meta name="description" content="sawalyno の公式サイト。日常にそっと寄り添う小さなモバイルアプリをつくっています。運営：合同会社 SAWADA（Sawada LLC）。">
+<meta name="theme-color" content="#0a0a0a">
+<link rel="canonical" href="https://sawalyno.jp/">
+<link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+
+<meta property="og:title" content="sawalyno">
+<meta property="og:description" content="Building quiet apps for everyday life.">
+<meta property="og:image" content="https://sawalyno.jp/assets/img/ogp.png">
+<meta property="og:url" content="https://sawalyno.jp/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="sawalyno">
+<meta property="og:locale" content="ja_JP">
+
+<meta name="twitter:card" content="summary_large_image">
+<!-- twitter:site / twitter:creator は SNS 開設後に追加 -->
+
+<!-- Preconnect for Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<!-- TODO: JetBrains Mono woff2 URL 確定後に <link rel="preload" as="font" type="font/woff2" crossorigin href="URL"> を追加 -->
+
+<!-- Google Fonts: JetBrains Mono, Hanken Grotesk, Noto Sans JP (subsetted) -->
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Hanken+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&text=%E6%97%A5%E6%9C%AC%E3%82%92%E6%8B%A0%E7%82%B9%E3%81%AB%E3%80%81%E3%81%B2%E3%81%A8%E3%82%8A%E3%81%A7%E6%97%A5%E7%94%A8%E3%81%AE%E3%81%9F%E3%82%81%E3%81%AE%E5%B0%8F%E3%81%95%E3%81%AA%E3%82%A2%E3%83%97%E3%83%AA%E3%82%92%E3%81%A4%E3%81%8F%E3%81%A3%E3%81%A6%E3%81%84%E3%81%BE%E3%81%99%E3%80%82%E3%83%87%E3%82%B6%E3%82%A4%E3%83%B3%E3%81%8B%E3%82%89%E5%AE%9F%E8%A3%85%E3%80%81%E9%81%8B%E7%94%A8%E3%81%BE%E3%81%A7%E3%82%92%E4%B8%80%E4%BA%BA%E3%81%A7%E3%80%82%E6%97%A5%E5%B8%B8%E3%81%AB%E3%81%9D%E3%81%A3%E3%81%A8%E5%AF%84%E3%82%8A%E6%B7%BB%E3%81%86%E3%82%BD%E3%83%95%E3%83%88%E3%82%A6%E3%82%A7%E3%82%A2%E3%82%92%E7%9B%AE%E6%8C%87%E3%81%97%E3%81%A6%E3%81%84%E3%81%BE%E3%81%99%E3%80%82%E5%95%86%E5%8F%B7%E4%BB%A3%E8%A1%A8%E8%80%85%E4%BA%8B%E6%A5%AD%E5%86%85%E5%AE%B9%E9%80%A3%E7%B5%A1%E5%85%88%E5%85%AC%E5%BC%8F%E3%82%B5%E3%82%A4%E3%83%88%E9%81%8B%E5%96%B6%E5%90%88%E5%90%8C%E4%BC%9A%E7%A4%BE%E5%95%8F%E3%81%84%E5%90%88%E3%82%8F%E3%81%9B%E3%81%AF%E3%83%A1%E3%83%BC%E3%83%AB%E3%81%AB%E3%81%A6%E3%81%8A%E9%A1%98%E3%81%84%E3%81%84%E3%81%9F%E3%81%97%E3%81%BE%E7%9B%AE%E3%81%AE%E3%82%B9%E3%83%88%E3%83%AC%E3%83%83%E3%83%81%E3%82%BF%E3%82%A4%E3%83%9E%E3%83%BC%E5%88%86%E3%81%94%E3%81%A8%E3%81%AB%E4%BC%91%E6%86%A9%E4%BF%83%E3%81%97%E3%82%AC%E3%82%A4%E3%83%89%E4%BD%9C%E6%A5%AD%E7%9B%B8%E6%A3%92%E5%91%BC%E5%90%B8%E6%B3%95%E3%83%A1%E3%83%B3%E3%82%BF%E3%83%AB%E3%82%B1%E3%82%A2%E4%B8%96%E7%95%8C%E4%B8%AD%E5%AE%9F%E8%B7%B5%E3%81%95%E3%82%8C%E8%AA%9E%E9%A8%93%E3%81%A7%E3%81%8D20%E3%83%9C%E3%82%AF&display=swap" rel="stylesheet">
+
+<!-- TODO: SNS 開設時に "sameAs" の配列に URL を追加する -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; script-src 'self'; img-src 'self' data: https:; connect-src 'none'; frame-src 'none'; object-src 'none'; base-uri 'self'">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Sawada LLC",
+  "legalName": "合同会社 SAWADA",
+  "alternateName": "sawalyno",
+  "url": "https://sawalyno.jp/",
+  "logo": "https://sawalyno.jp/assets/img/logo.svg",
+  "email": "sawalyno@gmail.com",
+  "sameAs": [],
+  "founder": {
+    "@type": "Person",
+    "name": "sawalyno"
+  }
+}
+</script>
+
+<link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body>
+
+<div class="scanlines" aria-hidden="true"></div>
+
+<!-- Skip link -->
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<!-- 0. System Bar -->
+<header id="sysbar">
+  <div class="sysbar-left">
+    <img src="/assets/img/logo-mark.svg" alt="" width="24" height="24">
+    <span class="sysbar-name">sawalyno</span>
+    <span class="sysbar-version">OS v1.0</span>
+  </div>
+
+  <nav aria-label="Primary navigation">
+    <ul class="sysbar-nav">
+      <li><a href="#about">about</a></li>
+      <li><a href="#apps">apps</a></li>
+      <li><a href="#contact">contact</a></li>
+    </ul>
+  </nav>
+
+  <div class="sysbar-clock" id="clock" aria-live="off" aria-label="Current time">--:--:--</div>
+</header>
+
+<main id="main">
+
+  <!-- 1. Hero -->
+  <section id="hero" aria-label="Hero">
+    <div class="hero-inner">
+      <div class="terminal-window" role="img" aria-label="Terminal showing: whoami → sawalyno, Solo developer based in Japan. Operating under Sawada LLC. Building quiet apps for everyday life.">
+        <div class="terminal-titlebar" aria-hidden="true">
+          <span class="titlebar-controls" aria-hidden="true">
+            <span class="titlebar-btn">_ □ ×</span>
+          </span>
+          <span class="titlebar-title">bash — sawalyno@sawada: ~</span>
+        </div>
+        <div class="terminal-body" aria-hidden="true">
+          <pre class="terminal-lines" lang="en">
+            <span class="terminal-line prompt-line" style="display:block">$ whoami</span>
+            <span class="terminal-line output-line" style="display:block">sawalyno</span>
+            <span class="terminal-line blank-line" style="display:block"></span>
+            <span class="terminal-line prompt-line" style="display:block">$ cat profile.txt</span>
+            <span class="terminal-line output-line" style="display:block">Solo developer based in Japan.</span>
+            <span class="terminal-line output-line" style="display:block">Operating under Sawada LLC.</span>
+            <span class="terminal-line blank-line" style="display:block"></span>
+            <span class="terminal-line prompt-line" style="display:block">$ ./greet --tagline</span>
+            <span class="terminal-line tagline-line" style="display:block" data-text="> Building quiet apps for everyday life."><span class="cursor" aria-hidden="true"></span></span>
+            <span class="terminal-line blank-line" style="display:block"></span>
+            <span class="terminal-line prompt-line" style="display:block">$ _</span>
+          </pre>
+        </div>
+      </div>
+
+      <div class="hero-cta">
+        <a href="#apps" class="btn-bevel">View Apps ↓</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. About -->
+  <section id="about" aria-labelledby="about-heading">
+    <div class="window fade-section">
+      <div class="window-titlebar">
+        <img class="titlebar-icon" src="/assets/img/logo-mark.svg" alt="" width="32" height="32">
+        <span class="titlebar-title">About — sawalyno.txt</span>
+        <div class="titlebar-controls" aria-hidden="true">
+          <span class="titlebar-btn">_ □ ×</span>
+        </div>
+      </div>
+      <div class="window-body">
+        <h2 id="about-heading">I'm sawalyno.</h2>
+        <p>日本を拠点に、ひとりで日用のための小さなアプリをつくっています。デザインから実装、運用までを一人で。日常にそっと寄り添うソフトウェアを目指しています。</p>
+
+        <div class="entity-card">
+          <div class="entity-label">Operating Entity</div>
+          <table class="entity-table" aria-label="Operating entity information">
+            <tbody>
+              <tr>
+                <th scope="row">商号（日本語）</th>
+                <td>合同会社 SAWADA</td>
+              </tr>
+              <tr>
+                <th scope="row">商号（英語）</th>
+                <td>Sawada LLC</td>
+              </tr>
+              <tr>
+                <th scope="row">代表者</th>
+                <td>sawalyno</td>
+              </tr>
+              <tr>
+                <th scope="row">事業内容</th>
+                <td>モバイルアプリの企画・開発・運営</td>
+              </tr>
+              <tr>
+                <th scope="row">連絡先</th>
+                <td>sawalyno@gmail.com</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. Apps -->
+  <section id="apps" aria-labelledby="apps-heading">
+    <h2 id="apps-heading" class="section-heading">
+      <span class="prefix">// </span>Apps
+    </h2>
+    <div class="apps-grid">
+
+      <!-- eyerest -->
+      <article class="window app-card fade-section">
+        <div class="window-titlebar">
+          <span class="titlebar-title">eyerest.app</span>
+          <div class="titlebar-controls" aria-hidden="true">
+            <span class="titlebar-btn">_ □ ×</span>
+          </div>
+        </div>
+        <div class="window-body">
+          <img class="app-icon" src="/assets/img/icon-eyerest.svg" alt="eyerest icon" width="48" height="48">
+          <h3 class="app-name">eyerest</h3>
+          <span class="app-genre">目のストレッチタイマー</span>
+          <p class="app-desc">20分ごとにそっと休憩を促し、目のストレッチをガイドする。VDT 作業の小さな相棒。</p>
+          <span class="badge-coming-soon">Coming Soon</span>
+        </div>
+      </article>
+
+      <!-- BreathCare -->
+      <article class="window app-card fade-section">
+        <div class="window-titlebar">
+          <span class="titlebar-title">BreathCare.app</span>
+          <div class="titlebar-controls" aria-hidden="true">
+            <span class="titlebar-btn">_ □ ×</span>
+          </div>
+        </div>
+        <div class="window-body">
+          <img class="app-icon" src="/assets/img/icon-breathcare.svg" alt="BreathCare icon" width="48" height="48">
+          <h3 class="app-name">BreathCare</h3>
+          <span class="app-genre">呼吸法 / メンタルケア</span>
+          <p class="app-desc">4-7-8 呼吸・ボックス呼吸など、世界中で実践される呼吸法を日本語ガイドで体験できる。</p>
+          <span class="badge-coming-soon">Coming Soon</span>
+        </div>
+      </article>
+
+      <!-- More placeholder -->
+      <div class="window app-card app-card-placeholder fade-section" aria-hidden="true">
+        <div class="window-titlebar">
+          <span class="titlebar-title">???.app</span>
+          <div class="titlebar-controls" aria-hidden="true">
+            <span class="titlebar-btn">_ □ ×</span>
+          </div>
+        </div>
+        <div class="window-body">
+          <span>More apps loading</span><span class="cursor-apps"></span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 4. Contact -->
+  <section id="contact" aria-labelledby="contact-heading">
+    <div class="window fade-section">
+      <div class="window-titlebar">
+        <span class="titlebar-title">Contact — mail.txt</span>
+        <div class="titlebar-controls" aria-hidden="true">
+          <span class="titlebar-btn">_ □ ×</span>
+        </div>
+      </div>
+      <div class="window-body">
+        <h2 id="contact-heading" class="section-heading">
+          <span class="prefix">// </span>Contact
+        </h2>
+        <p>お問い合わせはメールにてお願いいたします。</p>
+        <a
+          class="contact-email"
+          href="mailto:&#115;awalyno&#64;gmail.com"
+          aria-label="Email sawalyno (sawalyno at gmail dot com)"
+        >sawalyno@gmail.com</a>
+        <!-- social links coming soon -->
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- 5. Taskbar Footer -->
+<footer id="taskbar">
+  <div class="start-btn" aria-hidden="true">
+    <img class="start-icon" src="/assets/img/logo-mark.svg" alt="" width="16" height="16">
+    <span>start</span>
+  </div>
+
+  <p class="taskbar-center">© 2026 sawalyno · <span lang="ja" style="font-family: var(--font-jp);">合同会社 SAWADA</span></p>
+
+  <nav class="taskbar-links" aria-label="Footer links">
+    <a href="https://sawalyno.github.io/apps-support/" target="_blank" rel="noopener noreferrer">support ↗</a>
+    <a href="https://sawalyno.github.io/apps-support/privacy" target="_blank" rel="noopener noreferrer">privacy ↗</a>
+  </nav>
+</footer>
+
+<noscript><style>.hero-cta,.fade-section{opacity:1;transform:none}</style></noscript>
+<script src="/assets/js/main.js" defer></script>
+</body>
+</html>

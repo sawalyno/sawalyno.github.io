@@ -1,0 +1,820 @@
+/* ================================================================
+   style.css — sawalyno.jp
+   Aesthetic: Dark CRT terminal × Windows XP Luna retro
+   ================================================================ */
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:         #0a0a0a;
+  --bg-card:    #161616;
+  --border:     #2a2a2a;
+  --border-hi:  #3a3a3a;
+  --border-hi2: #5a5a5a;
+  --titlebar:   linear-gradient(180deg, #2c2c34 0%, #1a1a22 100%);
+  --term-bg:    #000000;
+  --term-green: #5fff8f;
+  --prompt:     #4ade80;
+  --text:       #e8e8e8;
+  --sub:        #9a9a9a;
+  --luna:       #4ea1ff;
+  --yellow:     #ffcc33;
+  --font-jp:    "Noto Sans JP", "Hiragino Sans", "Yu Gothic", sans-serif;
+  --font-en:    "Hanken Grotesk", system-ui, sans-serif;
+  --font-mono:  "JetBrains Mono", "Fira Code", "SF Mono", "Consolas", monospace;
+
+  /* Luna blue gradient for active window titlebar */
+  --titlebar-active: linear-gradient(180deg, #2a5fac 0%, #1440a0 40%, #0d2d7a 100%);
+  --titlebar-active-border: #1e4a90;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-en);
+  font-size: 16px;
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+/* Ambient CRT screen glow — as if you're sitting in a dark room */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 50% at 50% 38%, rgba(95,255,143,0.022) 0%, transparent 60%),
+    radial-gradient(ellipse 80% 40% at 50% 100%, rgba(78,161,255,0.03) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* SVG noise overlay */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  opacity: 0.035;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Scanlines */
+.scanlines {
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0,0,0,0.12) 2px,
+    rgba(0,0,0,0.12) 4px
+  );
+  opacity: 0.030;
+  pointer-events: none;
+  z-index: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body::after, .scanlines { opacity: 0; }
+}
+
+/* ================================================================
+   Skip Link
+   ================================================================ */
+.skip-link {
+  position: absolute;
+  top: -999px;
+  left: 0;
+  z-index: 9999;
+  background: var(--luna);
+  color: #000;
+  padding: 8px 16px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  text-decoration: none;
+}
+.skip-link:focus { top: 0; outline: 2px solid var(--luna); outline-offset: 2px; }
+
+/* ================================================================
+   System Bar
+   ================================================================ */
+#sysbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 32px;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 14px;
+  background: rgba(8,8,10,0.90);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(60,60,70,0.6);
+  gap: 12px;
+}
+
+/* Subtle top-edge highlight on sysbar */
+#sysbar::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05) 30%, rgba(255,255,255,0.05) 70%, transparent);
+  pointer-events: none;
+}
+
+.sysbar-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--sub);
+  white-space: nowrap;
+}
+.sysbar-left img {
+  width: 24px; height: 24px;
+  image-rendering: pixelated;
+  flex-shrink: 0;
+}
+.sysbar-name { color: #c8c8d0; font-weight: 700; letter-spacing: 0.01em; }
+.sysbar-version { color: #555560; }
+
+.sysbar-nav { display: flex; gap: 20px; list-style: none; }
+
+#sysbar nav {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.sysbar-nav a {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: #6a6a78;
+  text-decoration: none;
+  position: relative;
+  transition: color 150ms;
+  padding-bottom: 2px;
+}
+/* Underline slide-in on hover */
+.sysbar-nav a::after {
+  content: '';
+  position: absolute;
+  bottom: -1px; left: 0;
+  width: 0; height: 1px;
+  background: var(--term-green);
+  transition: width 180ms ease;
+}
+.sysbar-nav a:hover { color: var(--term-green); }
+.sysbar-nav a:hover::after { width: 100%; }
+.sysbar-nav a:focus-visible { outline: 2px solid var(--luna); outline-offset: 2px; }
+
+.sysbar-clock {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: #555560;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 767px) {
+  .sysbar-version { display: none; }
+  .sysbar-nav { gap: 14px; }
+}
+
+/* ================================================================
+   Main
+   ================================================================ */
+main { padding-top: 32px; position: relative; z-index: 2; }
+
+/* ================================================================
+   Focus visible
+   ================================================================ */
+:focus-visible {
+  outline: 2px solid var(--luna);
+  outline-offset: 2px;
+}
+
+/* ================================================================
+   Window Card (shared) — inactive state by default
+   ================================================================ */
+.window {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-top-color: var(--border-hi);
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow:
+    0 2px 8px rgba(0,0,0,0.5),
+    0 0 0 1px rgba(0,0,0,0.3),
+    inset 0 1px 0 rgba(255,255,255,0.03);
+  transition: box-shadow 180ms ease;
+}
+
+/* Windows XP "active window" effect on hover */
+.window:hover {
+  box-shadow:
+    0 4px 20px rgba(0,0,0,0.6),
+    0 0 0 1px rgba(78,161,255,0.18),
+    inset 0 1px 0 rgba(255,255,255,0.05);
+}
+.window:hover .window-titlebar {
+  background: var(--titlebar-active);
+  border-bottom-color: var(--titlebar-active-border);
+}
+.window:hover .titlebar-title {
+  color: #c0d4f0;
+}
+.window:hover .titlebar-btn {
+  color: #7090c0;
+}
+
+.window-titlebar {
+  background: var(--titlebar);
+  border-bottom: 1px solid var(--border);
+  padding: 0 8px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  user-select: none;
+  position: relative;
+  transition: background 180ms ease, border-color 180ms ease;
+}
+/* Bevel highlight on top of titlebar */
+.window-titlebar::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: rgba(255,255,255,0.07);
+  pointer-events: none;
+}
+
+.titlebar-icon {
+  width: 32px; height: 32px;
+  flex-shrink: 0;
+  image-rendering: pixelated;
+}
+.titlebar-title {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--sub);
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: color 180ms ease;
+}
+.titlebar-controls {
+  display: flex;
+  gap: 4px;
+  margin-left: auto;
+}
+.titlebar-btn {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--border-hi2);
+  line-height: 1;
+  transition: color 180ms ease;
+  letter-spacing: 0.1em;
+}
+.window-body { padding: 24px 28px; }
+
+/* ================================================================
+   Section fade-in (IntersectionObserver)
+   ================================================================ */
+.fade-section {
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 280ms ease, transform 280ms ease;
+}
+.fade-section.visible { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .fade-section { opacity: 1; transform: none; transition: none; }
+}
+
+/* ================================================================
+   Bevel Button (CTA) — WinXP Luna style
+   ================================================================ */
+.btn-bevel {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 22px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text);
+  background: linear-gradient(180deg, #3a3a48 0%, #1e1e2c 100%);
+  border: 1px solid #505062;
+  border-bottom-color: #0e0e18;
+  border-radius: 3px;
+  cursor: pointer;
+  text-decoration: none;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.12),
+    inset 1px 0 0 rgba(255,255,255,0.04),
+    0 2px 6px rgba(0,0,0,0.5);
+  transition: background 150ms, box-shadow 150ms, color 150ms, border-color 150ms;
+  -webkit-font-smoothing: antialiased;
+  letter-spacing: 0.01em;
+}
+.btn-bevel:hover {
+  background: linear-gradient(180deg, #4a4a5c 0%, #28283a 100%);
+  color: #fff;
+  border-color: #6a6a80;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.16),
+    0 2px 10px rgba(0,0,0,0.5),
+    0 0 16px rgba(78,161,255,0.10);
+}
+.btn-bevel:active {
+  background: linear-gradient(180deg, #1e1e2c 0%, #2a2a3c 100%);
+  box-shadow:
+    0 0 0 2px rgba(78,161,255,0.4),
+    0 0 12px rgba(78,161,255,0.2),
+    inset 0 1px 3px rgba(0,0,0,0.4);
+  border-color: #3a6aaa;
+}
+.btn-bevel:focus-visible { outline: 2px solid var(--luna); outline-offset: 2px; }
+
+/* ================================================================
+   Hero Section
+   ================================================================ */
+#hero {
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 56px 24px;
+  position: relative;
+}
+
+/* Green ambient halo from the terminal */
+#hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 65% 55% at 50% 45%, rgba(95,255,143,0.028) 0%, transparent 65%);
+  pointer-events: none;
+}
+
+.hero-inner {
+  width: 100%;
+  max-width: 900px;
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Terminal window ── */
+.terminal-window {
+  background: var(--term-bg);
+  border: 1px solid #2a2a2a;
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+  box-shadow:
+    0 8px 32px rgba(0,0,0,0.8),
+    0 0 0 1px rgba(95,255,143,0.08),
+    0 0 60px rgba(95,255,143,0.05),
+    0 0 120px rgba(95,255,143,0.025);
+}
+
+/* CRT inner vignette */
+.terminal-window::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 100% 100% at 50% 50%, transparent 60%, rgba(0,0,0,0.35) 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.terminal-titlebar {
+  background: linear-gradient(180deg, #282832 0%, #181820 100%);
+  border-bottom: 1px solid #222230;
+  padding: 0 10px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  user-select: none;
+  position: relative;
+  z-index: 2;
+}
+.terminal-titlebar::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: rgba(255,255,255,0.05);
+  pointer-events: none;
+}
+.terminal-titlebar .titlebar-title {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: #555560;
+}
+.terminal-titlebar .titlebar-btn { color: #3a3a4a; }
+
+.terminal-body {
+  padding: 22px 26px 28px;
+  min-height: 230px;
+  position: relative;
+  z-index: 2;
+}
+
+/* ── Terminal lines (phosphor CRT glow) ── */
+.terminal-lines {
+  font-family: var(--font-mono);
+  /* Reset <pre> default whitespace so HTML indentation is not rendered */
+  white-space: normal;
+}
+
+.terminal-line {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  line-height: 1.85;
+  color: var(--term-green);
+  opacity: 0;
+  white-space: pre-wrap;
+  word-break: break-all;
+  min-height: 1.85em;
+  /* The signature phosphor CRT glow */
+  text-shadow:
+    0 0 8px rgba(95, 255, 143, 0.55),
+    0 0 2px rgba(95, 255, 143, 0.8);
+  transition: opacity 80ms ease;
+}
+
+.terminal-line.prompt-line {
+  color: var(--prompt);
+  text-shadow:
+    0 0 8px rgba(74, 222, 128, 0.5),
+    0 0 2px rgba(74, 222, 128, 0.75);
+}
+.terminal-line.tagline-line { color: var(--term-green); }
+.terminal-line.visible { opacity: 1; }
+
+/* Blinking cursor (WCAG 2.3.1 safe: ~0.91Hz) */
+.cursor {
+  display: inline-block;
+  width: 8px;
+  height: 0.9em;
+  background: var(--term-green);
+  vertical-align: text-bottom;
+  margin-left: 1px;
+  animation: cur-blink 1.1s step-end infinite;
+  box-shadow: 0 0 6px rgba(95,255,143,0.8);
+}
+@keyframes cur-blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cursor { animation: none; opacity: 1; }
+  .terminal-line { opacity: 1; text-shadow: none; }
+}
+
+.hero-cta {
+  margin-top: 32px;
+  display: flex;
+  justify-content: flex-start;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 300ms ease, transform 300ms ease;
+}
+.hero-cta.visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* ================================================================
+   Section heading
+   ================================================================ */
+.section-heading {
+  font-family: var(--font-en);
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 0;
+  letter-spacing: -0.01em;
+}
+.section-heading .prefix {
+  font-family: var(--font-mono);
+  color: #4a4a5a;
+  font-weight: 400;
+  font-size: 20px;
+}
+
+/* ================================================================
+   About Section
+   ================================================================ */
+#about {
+  padding: 72px 24px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+#about .window-body h2 {
+  font-family: var(--font-en);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 14px;
+  letter-spacing: -0.01em;
+}
+
+#about .window-body p {
+  font-family: var(--font-jp);
+  color: #b8b8c0;
+  line-height: 1.95;
+  font-size: 15px;
+}
+
+/* Operating Entity sub-card */
+.entity-card {
+  background: rgba(0,0,0,0.25);
+  border: 1px solid #222228;
+  border-left: 2px solid rgba(95,255,143,0.18);
+  border-radius: 3px;
+  padding: 16px 20px;
+  margin-top: 28px;
+}
+.entity-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: #4a4a58;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  margin-bottom: 14px;
+}
+.entity-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+.entity-table td {
+  padding: 5px 0;
+  vertical-align: top;
+}
+.entity-table th,
+.entity-table td:first-child {
+  font-family: var(--font-mono);
+  color: #4a4a5a;
+  font-size: 11px;
+  width: 110px;
+  padding-right: 16px;
+  letter-spacing: 0.03em;
+}
+.entity-table td:last-child {
+  color: #9a9aaa;
+  font-family: var(--font-jp);
+  font-size: 13px;
+}
+
+/* ================================================================
+   Apps Section
+   ================================================================ */
+#apps {
+  padding: 72px 24px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.apps-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 18px;
+}
+
+.app-card .window-body { padding: 18px 22px 22px; }
+
+.app-icon {
+  width: 48px; height: 48px;
+  margin-bottom: 14px;
+  image-rendering: pixelated;
+}
+.app-name {
+  font-family: var(--font-en);
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 6px;
+  letter-spacing: -0.01em;
+}
+.app-genre {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: #5a8acc;
+  background: rgba(78,161,255,0.07);
+  border: 1px solid rgba(78,161,255,0.15);
+  border-radius: 2px;
+  padding: 2px 8px;
+  margin-bottom: 12px;
+  letter-spacing: 0.02em;
+}
+.app-desc {
+  font-family: var(--font-jp);
+  font-size: 13px;
+  color: #70707a;
+  line-height: 1.75;
+  margin-bottom: 16px;
+}
+.badge-coming-soon {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  color: #000;
+  background: var(--yellow);
+  padding: 3px 10px;
+  border-radius: 2px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* Placeholder card */
+.app-card-placeholder .window-body {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 120px;
+  color: #383840;
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+.cursor-apps {
+  display: inline-block;
+  width: 7px; height: 13px;
+  background: #383840;
+  animation: cur-blink 1.1s step-end infinite;
+  vertical-align: middle;
+  flex-shrink: 0;
+}
+@media (prefers-reduced-motion: reduce) {
+  .cursor-apps { animation: none; opacity: 0.5; }
+}
+
+/* ================================================================
+   Contact Section
+   ================================================================ */
+#contact {
+  padding: 72px 24px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+#contact .window-body p {
+  font-family: var(--font-jp);
+  color: #606068;
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+.contact-email {
+  font-family: var(--font-mono);
+  font-size: 20px;
+  color: var(--term-green);
+  text-decoration: none;
+  display: inline-block;
+  letter-spacing: 0.02em;
+  /* Phosphor glow on email — the visual anchor of this section */
+  text-shadow:
+    0 0 14px rgba(95,255,143,0.5),
+    0 0 3px rgba(95,255,143,0.3);
+  transition: color 150ms, text-shadow 150ms;
+}
+.contact-email:hover {
+  color: var(--luna);
+  text-shadow:
+    0 0 14px rgba(78,161,255,0.45),
+    0 0 3px rgba(78,161,255,0.25);
+}
+.contact-email:focus-visible {
+  outline: 2px solid var(--term-green);
+  outline-offset: 4px;
+}
+
+/* ================================================================
+   Taskbar Footer
+   ================================================================ */
+#taskbar {
+  position: relative;
+  z-index: 2;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px;
+  background: rgba(8,8,10,0.97);
+  border-top: 1px solid #1e1e24;
+  gap: 12px;
+}
+/* Inset top highlight (bevel) */
+#taskbar::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.04) 20%, rgba(255,255,255,0.04) 80%, transparent);
+  pointer-events: none;
+}
+
+/* Start button — decorative, cursor:default */
+.start-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  color: #505060;
+  padding: 4px 10px;
+  background: linear-gradient(180deg, #262630 0%, #181820 100%);
+  border: 1px solid #303038;
+  border-radius: 2px;
+  cursor: default;
+  user-select: none;
+  position: relative;
+  transition: color 150ms;
+  letter-spacing: 0.02em;
+}
+.start-btn:hover { color: #8080a0; }
+
+/* One-shot ring (§5.5) */
+.start-btn::after {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border: 2px solid var(--luna);
+  border-radius: 4px;
+  opacity: 0;
+  pointer-events: none;
+}
+.start-btn:hover::after {
+  animation: ring-once 300ms ease-out 1 forwards;
+}
+@keyframes ring-once {
+  0%   { opacity: 0; transform: scale(0.92); }
+  40%  { opacity: 0.8; transform: scale(1); }
+  100% { opacity: 0; transform: scale(1.08); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .start-btn:hover::after { animation: none; }
+  .start-btn:hover { color: var(--luna); }
+}
+
+.start-icon {
+  width: 16px; height: 16px;
+  image-rendering: pixelated;
+  flex-shrink: 0;
+}
+
+.taskbar-center {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: #3a3a48;
+  white-space: nowrap;
+  flex: 1;
+  text-align: center;
+  letter-spacing: 0.01em;
+}
+
+.taskbar-links {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+.taskbar-links a {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: #484858;
+  text-decoration: none;
+  transition: color 150ms;
+  white-space: nowrap;
+  letter-spacing: 0.02em;
+}
+.taskbar-links a:hover { color: var(--luna); }
+.taskbar-links a:focus-visible { outline: 2px solid var(--luna); outline-offset: 2px; }
+
+@media (max-width: 767px) {
+  .taskbar-center { display: none; }
+  .taskbar-links { gap: 12px; }
+}
