@@ -8,7 +8,7 @@
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif; background: #f9f9f9; color: #1a1a1a; line-height: 1.6; }
     header { background: #4ECDC4; padding: 48px 24px 40px; text-align: center; }
-    .app-icon { width: 80px; height: 80px; background: #fff; border-radius: 20px; margin: 0 auto 16px; display: flex; align-items: center; justify-content: center; font-size: 40px; }
+    .app-icon { width: 80px; height: 80px; border-radius: 20px; margin: 0 auto 16px; display: block; overflow: hidden; }
     header h1 { color: #fff; font-size: 22px; font-weight: 700; }
     header p { color: rgba(255,255,255,0.85); margin-top: 6px; font-size: 14px; }
     main { max-width: 640px; margin: 0 auto; padding: 40px 24px; }
@@ -33,7 +33,7 @@
 </head>
 <body>
   <header>
-    <div class="app-icon">👁</div>
+    <img class="app-icon" src="../../icon.png" alt="EyeRest アイコン" width="80" height="80">
     <h1>EyeRest</h1>
     <p>目のストレッチタイマー — 20-20-20ルールで目を守る</p>
   </header>
