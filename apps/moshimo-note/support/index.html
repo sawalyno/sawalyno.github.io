@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>もしもノート サポート</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif; background: #f9f9f9; color: #1a1a1a; line-height: 1.6; }
+    header { background: #7A9DC4; padding: 48px 24px 40px; text-align: center; }
+    .app-icon { width: 80px; height: 80px; border-radius: 20px; margin: 0 auto 16px; display: block; overflow: hidden; }
+    header h1 { color: #fff; font-size: 22px; font-weight: 700; }
+    header p { color: rgba(255,255,255,0.85); margin-top: 6px; font-size: 14px; }
+    main { max-width: 640px; margin: 0 auto; padding: 40px 24px; }
+    section { margin-bottom: 40px; }
+    h2 { font-size: 18px; font-weight: 700; color: #1a1a1a; padding-bottom: 10px; border-bottom: 2px solid #7A9DC4; margin-bottom: 20px; }
+    .overview p { font-size: 15px; color: #374151; margin-bottom: 12px; }
+    .features { list-style: none; }
+    .features li { font-size: 14px; color: #374151; padding: 8px 0; border-bottom: 1px solid #f3f4f6; display: flex; gap: 10px; }
+    .features li::before { content: '✓'; color: #7A9DC4; font-weight: 700; flex-shrink: 0; }
+    .faq-item { background: #fff; border-radius: 10px; border: 1px solid #e5e7eb; margin-bottom: 12px; overflow: hidden; }
+    .faq-q { font-size: 14px; font-weight: 600; padding: 16px 20px; color: #1a1a1a; }
+    .faq-a { font-size: 14px; color: #4b5563; padding: 0 20px 16px; border-top: 1px solid #f3f4f6; padding-top: 12px; }
+    .faq-a a { color: #7A9DC4; text-decoration: none; }
+    .contact-box { background: #fff; border-radius: 10px; border: 1px solid #e5e7eb; padding: 24px; text-align: center; }
+    .contact-box p { font-size: 14px; color: #6b7280; margin-bottom: 12px; }
+    .contact-box a { display: inline-block; background: #7A9DC4; color: #fff; font-size: 14px; font-weight: 600; padding: 10px 24px; border-radius: 8px; text-decoration: none; }
+    .privacy-link { text-align: center; margin-top: 16px; font-size: 13px; }
+    .privacy-link a { color: #7A9DC4; text-decoration: none; }
+    .version-info { font-size: 13px; color: #9ca3af; text-align: center; margin-top: 8px; }
+    footer { text-align: center; padding: 32px 24px; font-size: 12px; color: #9ca3af; }
+    footer a { color: #9ca3af; }
+  </style>
+</head>
+<body>
+  <header>
+    <img class="app-icon" src="../icon.png" alt="もしもノート アイコン" width="80" height="80">
+    <h1>もしもノート</h1>
+    <p>家族に伝える記録 — もしもの時に家族が迷わないために</p>
+  </header>
+
+  <main>
+    <section class="overview">
+      <h2>アプリについて</h2>
+      <p>もしもノートは、万が一の際に家族が知っておくべき重要情報をスマートフォンにローカル保存するエンディングノートアプリです。</p>
+      <p>銀行口座・保険・デジタルアカウントのパスワードなど、11カテゴリの情報を一か所にまとめて記録できます。データはすべてお使いの端末内にのみ保存され、クラウドサーバーへの送信は一切行いません。</p>
+      <ul class="features">
+        <li>11カテゴリ対応（金融資産・保険・デジタル資産など）</li>
+        <li>無料3カテゴリ + 買い切り¥480で全11カテゴリ解放</li>
+        <li>カスタムカテゴリ作成（自作カテゴリ・項目を自由に追加）</li>
+        <li>AES-128暗号化パスワード付きPDF出力（家族への安全な共有）</li>
+        <li>起動時の生体認証（Face ID / Touch ID / 端末パスコード）</li>
+        <li>データはすべて端末内にのみ保存（クラウド送信なし）</li>
+        <li>iOS / Android 両対応</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>よくあるご質問</h2>
+
+      <div class="faq-item">
+        <div class="faq-q">アプリのデータはどこに保存されますか？</div>
+        <div class="faq-a">入力したすべてのデータはお使いの端末内にのみ保存されます。クラウドサーバーへの送信は一切行いません。アプリを削除するとデータも消去されますのでご注意ください。</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">生体認証を設定するにはどうすればよいですか？</div>
+        <div class="faq-a">
+          もしもノートはアプリ起動時に毎回、端末に設定された生体認証（Face ID・Touch ID・指紋認証）または端末パスコードで認証を行います。特別な設定は不要です。<br>
+          端末に生体認証が設定されていない場合は、端末のパスコードが代わりに使用されます。端末の「設定」から生体認証をあらかじめ登録されることをおすすめします。
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">無料版と買い切り版の違いは何ですか？</div>
+        <div class="faq-a">
+          無料版では「金融資産」「保険」「デジタル資産・アカウント」の3カテゴリをご利用いただけます。<br>
+          買い切り版（¥480・一度払えば永久利用）では、残り8カテゴリ（本人・緊急情報 / 不動産・住まい / 車 / 借金・ローン / 緊急連絡先・専門家 / 本人の意思・希望 / ペット / 遺言・相続）とパスワード付きPDF出力・カスタムカテゴリ作成機能が解放されます。
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">PDF出力機能の使い方を教えてください</div>
+        <div class="faq-a">
+          買い切り版の購入後、下部タブの「PDF出力」からご利用いただけます。パスワードを設定し、安全な取り扱いに関する同意事項（5項目）を確認の上、出力ボタンをタップしてください。<br>
+          生成したPDFはAirDrop・メールなどのOS標準共有機能で家族に送ることができます。パスワードはPDFとは別の手段（口頭・別メッセージなど）で家族に伝えてください。
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">別の端末で購入を復元するには？</div>
+        <div class="faq-a">
+          アプリ内の買い切りアンロック画面にある「購入を復元する」をタップしてください。<br>
+          <strong>iPhone:</strong> 同じApple IDでサインインしている場合、以前の購入が復元されます。<br>
+          <strong>Android:</strong> 同じGoogleアカウントでサインインしている場合、以前の購入が復元されます。
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">データのバックアップはできますか？</div>
+        <div class="faq-a">
+          現在のバージョンでは、データのエクスポート・バックアップ機能は非対応です。端末の紛失・初期化・アプリの削除によってデータが消えた場合の復元はできませんのでご注意ください。<br>
+          PDF出力機能（買い切り版）を使用してパスワード付きPDFを保存しておくことで、記録の控えとしてご活用いただけます。
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">カスタムカテゴリを追加するには？</div>
+        <div class="faq-a">
+          買い切り版の購入後、アプリ内のカスタムカテゴリ作成画面からご利用いただけます。カテゴリ名・アイコンを設定し、項目（フィールド）を自由に追加してオリジナルのエンディングノートを作成できます。
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>お問い合わせ</h2>
+      <div class="contact-box">
+        <p>ご不明な点やご意見は、メールにてお気軽にお問い合わせください。</p>
+        <a href="mailto:sawalyno@gmail.com">sawalyno@gmail.com</a>
+      </div>
+      <div class="privacy-link">
+        <a href="./privacy.html">プライバシーポリシー</a>
+      </div>
+      <p class="version-info">バージョン 1.0</p>
+    </section>
+  </main>
+
+  <footer>
+    © 2026 sawalyno &nbsp;·&nbsp; <a href="/">sawalyno.jp</a>
+  </footer>
+</body>
+</html>

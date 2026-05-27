@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>もしもノート プライバシーポリシー</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif; background: #f9f9f9; color: #1a1a1a; line-height: 1.7; }
+    header { background: #7A9DC4; padding: 40px 24px; text-align: center; }
+    header h1 { color: #fff; font-size: 20px; font-weight: 700; }
+    header p { color: rgba(255,255,255,0.85); margin-top: 6px; font-size: 13px; }
+    main { max-width: 640px; margin: 0 auto; padding: 40px 24px 60px; }
+    section { margin-bottom: 36px; }
+    h2 { font-size: 16px; font-weight: 700; color: #1a1a1a; margin-bottom: 12px; padding-left: 10px; border-left: 3px solid #7A9DC4; }
+    p { font-size: 14px; color: #374151; margin-bottom: 10px; }
+    ul { list-style: none; margin: 8px 0; }
+    ul li { font-size: 14px; color: #374151; padding: 6px 0; padding-left: 16px; position: relative; }
+    ul li::before { content: '・'; position: absolute; left: 0; color: #7A9DC4; }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 8px; }
+    th { background: #f3f4f6; text-align: left; padding: 10px 12px; font-weight: 600; color: #374151; border: 1px solid #e5e7eb; }
+    td { padding: 10px 12px; border: 1px solid #e5e7eb; color: #4b5563; vertical-align: top; }
+    a { color: #7A9DC4; text-decoration: none; }
+    .updated { font-size: 12px; color: #9ca3af; text-align: right; margin-bottom: 32px; }
+    footer { text-align: center; padding: 24px; font-size: 12px; color: #9ca3af; }
+    footer a { color: #9ca3af; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>もしもノート プライバシーポリシー</h1>
+    <p>家族に伝える記録</p>
+  </header>
+
+  <main>
+    <p class="updated">最終更新日: 2026年5月27日</p>
+
+    <section>
+      <h2>はじめに</h2>
+      <p>sawalyno（以下「当方」）が提供するアプリ「もしもノート」（以下「本アプリ」）は、ユーザーのプライバシーを尊重します。本ポリシーでは、本アプリが収集・利用するデータについて説明します。</p>
+      <p>本アプリは、氏名・住所・連絡先などの個人情報をユーザーが任意で入力できる構造になっています。これらのデータを含む入力内容はすべてお使いの端末内にのみ保存され、当方のサーバーや第三者のサーバーに送信されることはありません。</p>
+    </section>
+
+    <section>
+      <h2>収集するデータ</h2>
+      <p>本アプリは以下のデータを収集します。</p>
+      <ul>
+        <li>購入情報（RevenueCat を通じて処理。買い切り¥480の購入確認）</li>
+        <li>デバイス識別子（RevenueCat が生成する匿名ID）</li>
+        <li>クラッシュ・エラーログ（Sentry を通じて収集。デバイス種別・OSバージョン・エラー内容を含む）</li>
+      </ul>
+      <p>ユーザーがアプリ内に入力する情報（氏名・住所・口座情報・パスワード等）は、端末内の AsyncStorage にのみ保存されます。当方のサーバーへの送信は行いません。</p>
+    </section>
+
+    <section>
+      <h2>データの利用目的</h2>
+      <ul>
+        <li>買い切り機能（全11カテゴリ・PDF出力）の購入確認・管理</li>
+        <li>アプリの品質向上・バグ修正</li>
+        <li>広告・第三者マーケティングへの利用はありません</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>セキュリティ対策</h2>
+      <p>本アプリは入力データを保護するために以下のセキュリティ機能を実装しています。</p>
+      <ul>
+        <li>アプリ起動時の生体認証必須（Face ID / Touch ID / 端末パスコード）</li>
+        <li>バックグラウンド遷移後の即時ロック・復帰時再認証</li>
+        <li>パスワード入力5回失敗で5分間ロック</li>
+        <li>iOS NSFileProtectionComplete によるファイル保護</li>
+        <li>Android FLAG_SECURE（スクリーンショット撮影防止）</li>
+        <li>iCloud / Google Drive バックアップからのデータ除外（iOS: NSURLIsExcludedFromBackupKey / Android: allowBackup="false"）</li>
+        <li>パスワード付きPDF出力時のAES-128暗号化（iOS PDFKit / Android PdfBox-Android）</li>
+        <li>コピー操作後3分でのクリップボード自動クリア（パスワードフィールドのコピー後に自動消去）</li>
+        <li>Sentry エラーログへのセンシティブ情報フィルタ（beforeSend hookにより入力データを除外）</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>第三者サービスへの提供</h2>
+      <p>本アプリは以下のサードパーティサービスを利用しています。各サービスのプライバシーポリシーも合わせてご確認ください。</p>
+      <table>
+        <tr>
+          <th>サービス</th>
+          <th>用途</th>
+          <th>プライバシーポリシー</th>
+        </tr>
+        <tr>
+          <td>Apple Inc.</td>
+          <td>App Store 課金処理（iOS）</td>
+          <td><a href="https://www.apple.com/legal/privacy/ja/" target="_blank">apple.com</a></td>
+        </tr>
+        <tr>
+          <td>Google LLC</td>
+          <td>Google Play 課金処理（Android）</td>
+          <td><a href="https://policies.google.com/privacy?hl=ja" target="_blank">policies.google.com</a></td>
+        </tr>
+        <tr>
+          <td>RevenueCat Inc.</td>
+          <td>買い切り購入管理</td>
+          <td><a href="https://www.revenuecat.com/privacy" target="_blank">revenuecat.com</a></td>
+        </tr>
+        <tr>
+          <td>Functional Software, Inc.（Sentry）</td>
+          <td>エラー・クラッシュ解析</td>
+          <td><a href="https://sentry.io/privacy/" target="_blank">sentry.io</a></td>
+        </tr>
+      </table>
+      <p style="margin-top:12px;">なお、PDF生成機能は Android PdfBox-Android v2.0.27.0（Apache License 2.0 オープンソースライセンス）を使用しています。同ライブラリはネットワーク通信を行いません。</p>
+    </section>
+
+    <section>
+      <h2>データの保存・保持期間</h2>
+      <p>ユーザーが入力したデータはお使いの端末内にのみ保存されます。当方が独自にユーザーの入力データをサーバーへ保存することはありません。</p>
+      <p>RevenueCat・Sentry が収集するデータ（購入情報・クラッシュログ）は各サービスのポリシーに従って管理されます。</p>
+    </section>
+
+    <section>
+      <h2>国外へのデータ移転</h2>
+      <p>RevenueCat Inc. および Functional Software, Inc.（Sentry）は米国に拠点を置く企業です。本アプリを利用することで、「収集するデータ」に記載の情報（購入情報・クラッシュログ）が日本国外（米国）のサーバーで処理・保存される場合があります。各社のプライバシーポリシーに従って適切に管理されます。</p>
+    </section>
+
+    <section>
+      <h2>ユーザーの権利・データ削除</h2>
+      <p>ユーザーは以下の権利を有します。</p>
+      <ul>
+        <li>収集されたデータの内容を確認する権利</li>
+        <li>データの削除を要求する権利</li>
+      </ul>
+      <p>端末内に保存されたデータはアプリ内の「設定」→「全データを削除」からいつでも削除できます。</p>
+      <p>RevenueCat・Sentry が保持するデータの確認・削除をご希望の場合は、<a href="mailto:sawalyno@gmail.com">sawalyno@gmail.com</a> までお問い合わせください。各サービスのデータ削除手続きをご案内します。なお、Apple・Google が管理する課金情報の削除は各社のポリシーに従います。</p>
+    </section>
+
+    <section>
+      <h2>お子様のプライバシー</h2>
+      <p>本アプリは13歳未満のお子様を対象としておらず、意図的に13歳未満からデータを収集することはありません。</p>
+    </section>
+
+    <section>
+      <h2>本ポリシーの変更</h2>
+      <p>本ポリシーは予告なく変更される場合があります。変更後のポリシーはこのページに掲載されます。重要な変更がある場合はアプリ内でお知らせします。</p>
+    </section>
+
+    <section>
+      <h2>お問い合わせ</h2>
+      <p>プライバシーに関するご質問・ご意見は以下までご連絡ください。</p>
+      <p><a href="mailto:sawalyno@gmail.com">sawalyno@gmail.com</a></p>
+    </section>
+  </main>
+
+  <footer>
+    © 2026 sawalyno &nbsp;·&nbsp; <a href="./">もしもノート サポート</a> &nbsp;·&nbsp; <a href="/">sawalyno.jp</a>
+  </footer>
+</body>
+</html>
