@@ -45,11 +45,11 @@
       <h2>収集するデータ</h2>
       <p>本アプリは以下のデータを収集します。</p>
       <ul>
-        <li>購入情報（RevenueCat を通じて処理。買い切り¥800の購入確認）</li>
-        <li>デバイス識別子（RevenueCat が生成する匿名ID）</li>
-        <li>クラッシュ・エラーログ（Sentry を通じて収集。デバイス種別・OSバージョン・エラー内容を含む）</li>
+        <li>購入情報（買い切り¥800を購入済みかどうかの確認に使います。購入の管理は RevenueCat を通じて行います）</li>
+        <li>アプリが自動で作る識別番号（購入状態の確認だけに使い、お名前などの情報とは結びつきません）</li>
+        <li>不具合の記録（アプリが正常に動かなかったときの機種・OSのバージョン・エラーの内容。Sentry を通じて収集します）</li>
       </ul>
-      <p>ユーザーがアプリ内に入力する情報（氏名・住所・口座情報・パスワード等）は、端末内の AsyncStorage にのみ保存されます。当方のサーバーへの送信は行いません。</p>
+      <p>あなたがアプリに入力した情報（氏名・住所・口座情報・パスワードなど）は、お使いの端末の中にだけ保存されます。当方や外部のサーバーに送られることはありません。</p>
     </section>
 
     <section>
@@ -63,17 +63,17 @@
 
     <section>
       <h2>セキュリティ対策</h2>
-      <p>本アプリは入力データを保護するために以下のセキュリティ機能を実装しています。</p>
+      <p>本アプリは、入力した内容を守るために次のような対策をとっています。</p>
       <ul>
-        <li>アプリ起動時の生体認証必須（Face ID / Touch ID / 端末パスコード）</li>
-        <li>バックグラウンド遷移後の即時ロック・復帰時再認証</li>
-        <li>パスワード入力5回失敗で5分間ロック</li>
-        <li>iOS NSFileProtectionComplete によるファイル保護</li>
-        <li>Android FLAG_SECURE（スクリーンショット撮影防止）</li>
-        <li>iCloud / Google Drive バックアップからのデータ除外（iOS: NSURLIsExcludedFromBackupKey / Android: allowBackup="false"）</li>
-        <li>パスワード付きPDF出力時のAES-128暗号化（iOS PDFKit / Android PdfBox-Android）</li>
-        <li>コピー操作後3分でのクリップボード自動クリア（パスワードフィールドのコピー後に自動消去）</li>
-        <li>Sentry エラーログへのセンシティブ情報フィルタ（beforeSend hookにより入力データを除外）</li>
+        <li>アプリを開くたびに、顔認証・指紋認証または端末のパスコードで本人確認をします</li>
+        <li>ほかのアプリに切り替えるとすぐにロックし、戻るときにもう一度本人確認をします</li>
+        <li>本人確認に5回続けて失敗すると、5分間ロックします</li>
+        <li>iPhone がロックされている間は、保存した内容を読み取れないように保護します</li>
+        <li>Android では、アプリの画面のスクリーンショットや画面録画ができないようにしています</li>
+        <li>Android では、入力した内容を Google ドライブのバックアップに含めません</li>
+        <li>PDF はパスワードをかけて暗号化した状態で作成します</li>
+        <li>パスワードをコピーした場合、3分後にクリップボードから自動で消去します</li>
+        <li>不具合の記録には、あなたが入力した内容を含めません</li>
       </ul>
     </section>
 
@@ -98,27 +98,27 @@
         </tr>
         <tr>
           <td>RevenueCat Inc.</td>
-          <td>買い切り購入管理</td>
+          <td>買い切りの購入状態の管理</td>
           <td><a href="https://www.revenuecat.com/privacy" target="_blank">revenuecat.com</a></td>
         </tr>
         <tr>
           <td>Functional Software, Inc.（Sentry）</td>
-          <td>エラー・クラッシュ解析</td>
+          <td>不具合の記録・分析</td>
           <td><a href="https://sentry.io/privacy/" target="_blank">sentry.io</a></td>
         </tr>
       </table>
-      <p style="margin-top:12px;">なお、PDF生成機能は Android PdfBox-Android v2.0.27.0（Apache License 2.0 オープンソースライセンス）を使用しています。同ライブラリはネットワーク通信を行いません。</p>
+      <p style="margin-top:12px;">なお、PDF の作成は端末の中だけで行い、インターネットには接続しません。</p>
     </section>
 
     <section>
       <h2>データの保存・保持期間</h2>
       <p>ユーザーが入力したデータはお使いの端末内にのみ保存されます。当方が独自にユーザーの入力データをサーバーへ保存することはありません。</p>
-      <p>RevenueCat・Sentry が収集するデータ（購入情報・クラッシュログ）は各サービスのポリシーに従って管理されます。</p>
+      <p>RevenueCat・Sentry が収集するデータ（購入情報・不具合の記録）は各サービスのポリシーに従って管理されます。</p>
     </section>
 
     <section>
       <h2>国外へのデータ移転</h2>
-      <p>RevenueCat Inc. および Functional Software, Inc.（Sentry）は米国に拠点を置く企業です。本アプリを利用することで、「収集するデータ」に記載の情報（購入情報・クラッシュログ）が日本国外（米国）のサーバーで処理・保存される場合があります。各社のプライバシーポリシーに従って適切に管理されます。</p>
+      <p>RevenueCat Inc. および Functional Software, Inc.（Sentry）は米国に拠点を置く企業です。本アプリを利用することで、「収集するデータ」に記載の情報（購入情報・不具合の記録）が日本国外（米国）のサーバーで処理・保存される場合があります。各社のプライバシーポリシーに従って適切に管理されます。</p>
     </section>
 
     <section>
