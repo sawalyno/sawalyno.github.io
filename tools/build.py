@@ -324,7 +324,8 @@ def apply_font_subset(page: str, texts: list) -> str:
 # ---------------------------------------------------------------- cache stamps
 def apply_stamps(page: str) -> str:
     for rel in ASSETS:
-        digest = hashlib.sha256((ROOT / rel).read_bytes()).hexdigest()[:8]
+        # 改行コードをそろえてからハッシュを取る。Git が Windows で CRLF に変えても値が変わらないように
+        digest = hashlib.sha256((ROOT / rel).read_bytes().replace(b"\r\n", b"\n")).hexdigest()[:8]
         page = re.sub(r'(/' + re.escape(rel) + r')(\?v=[^"]*)?(")', lambda m: f"{m.group(1)}?v={digest}{m.group(3)}", page)
     return page
 
