@@ -1,5 +1,5 @@
 {
-  "_readme": "サイトに載せるアプリの一覧。ここを編集して python tools/build.py を実行する。表示順は released（どちらかのストアで初めて公開された日 YYYY-MM-DD・未公開なら null）の新しい順で、公開から 60 日は「NEW」が付く（同じ日なら下の並び順）。name = ストアの正式名。tagline = サポート系ページのヘッダーに出すひとこと。color = サポート系ページの帯の色（#RRGGBB）。google_play はパッケージ名、app_store_id は数字の ID で、未公開なら null（「近日公開」と表示される）。terms = 利用規約ページを持つか（サブスクのあるアプリは true）。icon_source は元アイコン（1024px など）へのパスで、このリポジトリのルートからの相対。",
+  "_readme": "サイトに載せるアプリの一覧。ここを編集して python tools/build.py を実行する。表示順は released（どちらかのストアで初めて公開された日 YYYY-MM-DD・未公開なら null）の新しい順で、公開から 30 日は「NEW」が付く（同じ日なら下の並び順）。name = ストアの正式名。tagline = サポート系ページのヘッダーに出すひとこと。color = サポート系ページの帯の色（#RRGGBB）。google_play はパッケージ名、app_store_id は数字の ID で、未公開なら null（「近日公開」と表示される）。terms = 利用規約ページを持つか（サブスクのあるアプリは true）。icon_source は元アイコン（1024px など）へのパスで、このリポジトリのルートからの相対。",
   "apps": [
     {
       "id": "moshimo-note",

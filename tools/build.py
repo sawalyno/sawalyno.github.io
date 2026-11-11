@@ -41,7 +41,7 @@ FONT_BASE = "https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700"
 SITE = "https://sawalyno.jp"
 ICON_SIZE = 192
 TODO_MARK = "【要記入"
-NEW_DAYS = 60          # 初回公開からこの日数は一覧に「NEW」を付ける（期限切れは main.js も消す）
+NEW_DAYS = 30          # 初回公開からこの日数は一覧に「NEW」を付ける（期限切れは main.js も消す）
 
 # ファイル名 → ページの種類。terms は data/apps.json で "terms": true のアプリだけ作る
 KINDS = {
