@@ -1,0 +1,41 @@
+{
+  "_readme": "サイトに載せるアプリの一覧。ここを編集して python tools/build.py を実行する。並び順がそのまま表示順。name = ストアの正式名。tagline = サポート系ページのヘッダーに出すひとこと。color = サポート系ページの帯の色（#RRGGBB）。google_play はパッケージ名、app_store_id は数字の ID で、未公開なら null（「近日公開」と表示される）。terms = 利用規約ページを持つか（サブスクのあるアプリは true）。icon_source は元アイコン（1024px など）へのパスで、このリポジトリのルートからの相対。",
+  "apps": [
+    {
+      "id": "eyerest",
+      "name": "EyeRest",
+      "genre": "目のストレッチタイマー",
+      "desc": "20分ごとにそっと休憩を促し、目のストレッチをガイドする。VDT 作業の小さな相棒。",
+      "tagline": "目のストレッチタイマー — 20-20-20ルールで目を守る",
+      "color": "#4ECDC4",
+      "terms": true,
+      "icon_source": "apps/eyerest/icon.png",
+      "google_play": "jp.sawalyno.eyerest",
+      "app_store_id": "6762698407"
+    },
+    {
+      "id": "breathcare",
+      "name": "息息（いきいき）",
+      "genre": "呼吸法 / メンタルケア",
+      "desc": "4-7-8 呼吸・ボックス呼吸など、世界中で実践される呼吸法を日本語ガイドで体験できる。",
+      "tagline": "呼吸法でととのう",
+      "color": "#1A3A5C",
+      "terms": true,
+      "icon_source": "apps/breathcare/icon.png",
+      "google_play": "jp.sawalyno.breathcare",
+      "app_store_id": null
+    },
+    {
+      "id": "moshimo-note",
+      "name": "もしもノート",
+      "genre": "エンディングノート",
+      "desc": "口座や保険、各種アカウントなど、もしもの時に家族へ伝えたい情報を端末の中だけに記録する。",
+      "tagline": "家族に伝える記録 — もしもの時に家族が迷わないために",
+      "color": "#7A9DC4",
+      "terms": false,
+      "icon_source": "apps/moshimo-note/icon.png",
+      "google_play": "jp.sawalyno.moshimonote",
+      "app_store_id": null
+    }
+  ]
+}

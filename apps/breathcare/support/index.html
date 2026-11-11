@@ -4,39 +4,27 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>息息 サポート</title>
-  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif; background: #f9f9f9; color: #1a1a1a; line-height: 1.6; }
-    header { background: #1A3A5C; padding: 48px 24px 40px; text-align: center; }
-    .app-icon { width: 80px; height: 80px; border-radius: 20px; margin: 0 auto 16px; display: block; overflow: hidden; }
-    header h1 { color: #fff; font-size: 22px; font-weight: 700; }
-    header p { color: rgba(255,255,255,0.85); margin-top: 6px; font-size: 14px; }
-    main { max-width: 640px; margin: 0 auto; padding: 40px 24px; }
-    section { margin-bottom: 40px; }
-    h2 { font-size: 18px; font-weight: 700; color: #1a1a1a; padding-bottom: 10px; border-bottom: 2px solid #1A3A5C; margin-bottom: 20px; }
-    .overview p { font-size: 15px; color: #374151; margin-bottom: 12px; }
-    .features { list-style: none; }
-    .features li { font-size: 14px; color: #374151; padding: 8px 0; border-bottom: 1px solid #f3f4f6; display: flex; gap: 10px; }
-    .features li::before { content: '✓'; color: #1A3A5C; font-weight: 700; flex-shrink: 0; }
-    .faq-item { background: #fff; border-radius: 10px; border: 1px solid #e5e7eb; margin-bottom: 12px; overflow: hidden; }
-    .faq-q { font-size: 14px; font-weight: 600; padding: 16px 20px; color: #1a1a1a; }
-    .faq-a { font-size: 14px; color: #4b5563; padding: 0 20px 16px; border-top: 1px solid #f3f4f6; padding-top: 12px; }
-    .faq-a a { color: #1A3A5C; text-decoration: none; }
-    .contact-box { background: #fff; border-radius: 10px; border: 1px solid #e5e7eb; padding: 24px; text-align: center; }
-    .contact-box p { font-size: 14px; color: #6b7280; margin-bottom: 12px; }
-    .contact-box a { display: inline-block; background: #1A3A5C; color: #fff; font-size: 14px; font-weight: 600; padding: 10px 24px; border-radius: 8px; text-decoration: none; }
-    .privacy-link { text-align: center; margin-top: 16px; font-size: 13px; }
-    .privacy-link a { color: #1A3A5C; text-decoration: none; }
-    footer { text-align: center; padding: 32px 24px; font-size: 12px; color: #9ca3af; }
-    footer a { color: #9ca3af; }
-  </style>
+  <link rel="icon" href="/assets/img/favicon.png" type="image/png" sizes="64x64">
+  <link rel="stylesheet" href="/assets/css/support.css?v=e821019d">
 </head>
-<body>
-  <header>
-    <img class="app-icon" src="../icon.png" alt="息息 アイコン" width="80" height="80">
-    <h1>息息（いきいき）</h1>
-    <p>呼吸法でととのう</p>
+<body class="doc doc-support" style="--accent: #1a3a5c; --accent-text: #1a3a5c; --on-accent: #ffffff">
+  <!-- main 要素の外側は tools/build.py が data/apps.json から作る。手で直すのは main 要素の中だけ -->
+  <header class="doc-header">
+    <div class="doc-brand">
+      <img class="doc-icon" src="/assets/img/app-breathcare.png" alt="" width="60" height="60">
+      <div>
+        <h1 class="doc-app">息息（いきいき）</h1>
+        <p class="doc-tagline">呼吸法でととのう</p>
+      </div>
+    </div>
   </header>
+  <nav class="doc-nav" aria-label="息息（いきいき） のページ">
+    <ul>
+      <li><a href="./" aria-current="page">サポート</a></li>
+      <li><a href="./privacy.html">プライバシーポリシー</a></li>
+      <li><a href="./terms.html">利用規約</a></li>
+    </ul>
+  </nav>
 
   <main>
     <section class="overview">
@@ -114,8 +102,18 @@
     </section>
   </main>
 
-  <footer>
-    © 2026 sawalyno &nbsp;·&nbsp; <a href="/">sawalyno.jp</a>
+  <footer class="doc-footer">
+    <div class="doc-footer-inner">
+      <ul>
+        <li><a href="./">サポート</a></li>
+        <li><a href="./privacy.html">プライバシーポリシー</a></li>
+        <li><a href="./terms.html">利用規約</a></li>
+      </ul>
+      <a class="doc-maker" href="/">
+        <img src="/assets/img/logo-mark-64.png" alt="" width="28" height="28">
+        <span>© 2026 sawalyno / SAWADA LLC</span>
+      </a>
+    </div>
   </footer>
 </body>
 </html>
