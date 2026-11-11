@@ -312,6 +312,14 @@ html.js .term.is-intro .term-form { visibility: hidden; }
   border-radius: 2px;
   padding: 1px 8px;
 }
+/* "NEW" chip: apps released within the last NEW_DAYS (tools/build.py) */
+.app-new {
+  display: inline-block; margin-right: 6px; vertical-align: top;
+  font-family: var(--font-mono); font-size: 11px; font-weight: 700; line-height: 1.5; letter-spacing: 0.06em;
+  color: #1a1400; background: var(--yellow);
+  border-radius: 2px; padding: 1px 6px;
+}
+.app-tab .app-new { margin: 0 0 0 6px; font-size: 10px; padding: 0 5px; vertical-align: 2px; }
 .app-desc { font-family: var(--font-jp); font-size: 14px; line-height: 1.85; color: var(--text-2); max-width: 40em; }
 .store-links { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
 .app-docs { display: flex; flex-wrap: wrap; gap: 0 20px; font-family: var(--font-jp); font-size: 13px; }

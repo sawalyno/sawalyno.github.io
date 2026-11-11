@@ -301,6 +301,9 @@
   }
   function initApps() {
     const list = $('#app-list');
+    /* NEW chips carry their last day; drop stale ones if the page was not rebuilt in time */
+    const today = new Date().toLocaleDateString('sv-SE', { timeZone: 'Asia/Tokyo' });
+    $$('.app-new').forEach((b) => { if (b.dataset.newUntil < today) b.remove(); });
     $$('.app').forEach((pane) => {
       const id = pane.dataset.app;
       const name = $('.app-name', pane).textContent;
@@ -313,12 +316,15 @@
       img.src = $('.app-icon', pane).getAttribute('src');
       img.alt = '';
       const label = el('span');
-      label.append(el('b', null, name), el('small', null, genre));
+      const title = el('b', null, name);
+      const isNew = !!$('.app-new', pane);
+      if (isNew) title.appendChild(el('span', 'app-new', 'NEW'));
+      label.append(title, el('small', null, genre));
       tab.append(img, label);
       tab.addEventListener('click', () => selectApp(id));
       list.appendChild(tab);
       apps.push({
-        id, name, genre, pane, tab,
+        id, name, genre, pane, tab, isNew,
         desc: $('.app-desc', pane).textContent,
         links: $$('.store-links a', pane).map((a) => ({ label: a.dataset.store, href: a.href })),
         soon: $$('.btn-soon', pane).map((s) => s.textContent),
@@ -392,7 +398,7 @@
     about() { printAbout(); openWin('about', { keepFocus: true }); },
     skills() { printSkills(); openWin('skills', { keepFocus: true }); },
     apps() {
-      apps.forEach((a) => print(a.id.padEnd(14) + a.genre));
+      apps.forEach((a) => print(a.id.padEnd(14) + a.genre + (a.isNew ? '  [NEW]' : '')));
       print("Type 'open <app>' to see one.", 'dim');
       openWin('apps', { keepFocus: true });
     },

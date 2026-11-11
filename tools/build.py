@@ -15,7 +15,8 @@
   7. sitemap.xml を作り直す（変わったページの日付を今日にする）
 
 手で直すところ:
-  - アプリの追加・公開状況・色・ひとこと → data/apps.json
+  - アプリの追加・公開状況・色・ひとこと・公開日 → data/apps.json
+    （一覧は released＝初回公開日の新しい順。公開から NEW_DAYS 日は「NEW」を付ける）
     （"listed": false のアプリはサポート系ページだけ作り、会社サイトの一覧には出さない）
   - サポート・PP・規約の本文          → apps/{id}/support/*.html の <main> の中だけ
 それ以外（index.html の apps:begin 〜 apps:end、各ページの <main> の外側）は
@@ -40,6 +41,7 @@ FONT_BASE = "https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700"
 SITE = "https://sawalyno.jp"
 ICON_SIZE = 192
 TODO_MARK = "【要記入"
+NEW_DAYS = 60          # 初回公開からこの日数は一覧に「NEW」を付ける（期限切れは main.js も消す）
 
 # ファイル名 → ページの種類。terms は data/apps.json で "terms": true のアプリだけ作る
 KINDS = {
@@ -89,7 +91,27 @@ def load_apps() -> list:
             raise BuildError(f"{where}: google_play はパッケージ名（例 jp.sawalyno.eyerest）にしてください")
         if app.get("app_store_id") and not APPLE_ID_RE.match(str(app["app_store_id"])):
             raise BuildError(f"{where}: app_store_id は数字だけ（例 6762698407）にしてください")
+        if "released" not in app:
+            raise BuildError(f"{where}: released（初回公開日 YYYY-MM-DD・未公開なら null）がありません")
+        if app["released"] is not None:
+            try:
+                datetime.date.fromisoformat(app["released"])
+            except (TypeError, ValueError):
+                raise BuildError(f"{where}: released は YYYY-MM-DD（例 2026-10-29）か null にしてください")
     return apps
+
+
+def sort_key(app: dict) -> str:
+    """新しい順に並べるためのキー。未公開（null）は一番上。同じ日なら apps.json の順。"""
+    return app["released"] or "9999-12-31"
+
+
+def new_until(app: dict, today: datetime.date):
+    """NEW を付ける最終日（YYYY-MM-DD）。付けないなら None。"""
+    if not app.get("released"):
+        return None
+    until = datetime.date.fromisoformat(app["released"]) + datetime.timedelta(days=NEW_DAYS)
+    return until.isoformat() if today <= until else None
 
 
 def short_name(app: dict) -> str:
@@ -166,8 +188,10 @@ def render_store_links(app: dict) -> list:
     return rows
 
 
-def render_app(app: dict) -> str:
+def render_app(app: dict, today: datetime.date) -> str:
     e = html.escape
+    until = new_until(app, today)
+    badge = f'\n                <span class="app-new" data-new-until="{until}">NEW</span>' if until else ""
     lang = "" if app["name"].isascii() else ' lang="ja"'
     links = "\n".join("              " + row for row in render_store_links(app))
     docs = "".join(
@@ -178,7 +202,7 @@ def render_app(app: dict) -> str:
             <div class="app-head">
               <img class="app-icon" src="/assets/img/app-{app['id']}.png" alt="{e(app['name'])} のアイコン" width="84" height="84">
               <div>
-                <h3 class="app-name"{lang}>{e(app['name'])}</h3>
+                <h3 class="app-name"{lang}>{e(app['name'])}</h3>{badge}
                 <span class="app-genre">{e(app['genre'])}</span>
               </div>
             </div>
@@ -196,7 +220,9 @@ COUNT_RE = re.compile(r'(<span id="app-count">)[^<]*(</span>)')
 
 def apply_apps(page: str, apps: list) -> str:
     apps = [a for a in apps if a.get("listed", True)]   # "listed": false は一覧に出さない（公開前）
-    body = "\n\n".join(render_app(a) for a in apps)
+    apps = sorted(apps, key=sort_key, reverse=True)      # 新しい順（sorted は安定なので同じ日は元の順）
+    today = datetime.date.today()
+    body = "\n\n".join(render_app(a, today) for a in apps)
     page, n = BLOCK_RE.subn(lambda m: m.group(1) + body + m.group(2), page)
     if n != 1:
         raise BuildError("index.html に <!-- apps:begin --> 〜 <!-- apps:end --> が見つかりません")
