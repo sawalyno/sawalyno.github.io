@@ -244,7 +244,7 @@ html.js .term.is-intro .term-form { visibility: hidden; }
 /* ================================================================
    About
    ================================================================ */
-.win-about h2 {
+.win-about h2, .win-skills h2 {
   font-size: 22px;
   font-weight: 700;
   line-height: 1.3;
@@ -257,6 +257,7 @@ html.js .term.is-intro .term-form { visibility: hidden; }
   line-height: 1.95;
   font-size: 15px;
 }
+.about-text + .about-text { margin-top: 10px; }
 .entity-card {
   background: rgba(0,0,0,0.3);
   border: 1px solid #26262c;

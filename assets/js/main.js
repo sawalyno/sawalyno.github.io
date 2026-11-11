@@ -38,6 +38,7 @@
     about:    { w: 520, h: null, fx: 0.913, fy: 0.054 },
     apps:     { w: 780, h: 440,  fx: 0.32,  fy: 0.91 },
     contact:  { w: 316, h: null, fx: 0.992, fy: 0.94 },
+    skills:   { w: 540, h: null, fx: 0.5,   fy: 0.3 },
   };
   const ICON_COL = 124;
   const wins = new Map();
@@ -230,7 +231,13 @@
   }
 
   function enterOS() {
-    wins.forEach((w, id) => { w.state = 'open'; w.el.hidden = false; place(id); });
+    wins.forEach((w, id) => {
+      /* data-start="closed": not on the desktop until its icon is opened */
+      const closed = w.el.dataset.start === 'closed';
+      w.state = closed ? 'closed' : 'open';
+      w.el.hidden = closed;
+      if (!closed) place(id);
+    });
     ['about', 'contact', 'apps', 'terminal'].forEach(focusWin);   /* terminal ends on top */
   }
   function leaveOS() {
@@ -352,7 +359,10 @@
     line.appendChild(a);
   }
 
-  const FILES = ['about.txt', 'profile.txt', 'mail.txt'];
+  const FILES = ['about.txt', 'skills.txt', 'profile.txt', 'mail.txt'];
+  const printAbout = () => $$('#about .about-text').forEach((p) => print(p.textContent.trim()));
+  const printSkills = () => $$('.skills-table tr').forEach((tr) =>
+    print(tr.cells[0].textContent + '  ' + tr.cells[1].textContent));
   const THEMES = {
     green: ['#5fff8f', '95, 255, 143', '#4ade80'],
     amber: ['#ffc65c', '255, 198, 92', '#ffb000'],
@@ -365,6 +375,7 @@
   const COMMANDS = {
     help() {
       print('about          who is behind this site', 'dim');
+      print('skills         what I work with', 'dim');
       print('apps           list the apps', 'dim');
       print('open <app>     show one app, e.g. open eyerest', 'dim');
       print('contact        how to reach me', 'dim');
@@ -378,7 +389,8 @@
     whoami() { print('sawalyno'); },
     pwd() { print('/home/sawalyno'); },
     date() { print(new Date().toString()); },
-    about() { print($('.about-text').textContent.trim()); openWin('about', { keepFocus: true }); },
+    about() { printAbout(); openWin('about', { keepFocus: true }); },
+    skills() { printSkills(); openWin('skills', { keepFocus: true }); },
     apps() {
       apps.forEach((a) => print(a.id.padEnd(14) + a.genre));
       print("Type 'open <app>' to see one.", 'dim');
@@ -421,7 +433,8 @@
         print('To read a file instead: cat about.txt', 'dim');
         return;
       }
-      if (arg === 'about.txt') print($('.about-text').textContent.trim());
+      if (arg === 'about.txt') printAbout();
+      else if (arg === 'skills.txt') printSkills();
       else if (arg === 'profile.txt') { print('Solo developer based in Japan.'); print('Operating under SAWADA LLC.'); }
       else if (arg === 'mail.txt') print(email());
       else print('cat: ' + arg + ': No such file', 'err');
