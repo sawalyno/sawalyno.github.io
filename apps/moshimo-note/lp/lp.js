@@ -10,9 +10,9 @@
 
   var APP_STORE = 'https://apps.apple.com/jp/app/id6772194447';
   var PLAY_STORE = 'https://play.google.com/store/apps/details?id=jp.sawalyno.moshimonote';
-  // App Store Connect › App アナリティクス › キャンペーンリンク生成画面に出る「pt=」の値（数字）。
-  // 空のままだと ct= だけが付き、App Store 側の集計には出ない。
-  var APPLE_PT = '';
+  // App Store Connect › アナリティクス › 獲得 › キャンペーンリンク生成画面に出る「pt=」の値（提供元の番号・公開値）。
+  // 開発者アカウントで共通なので、ほかのアプリの LP でも同じ値を使う（2026-11-12 取得）
+  var APPLE_PT = '128482563';
 
   var html = document.documentElement;
   var ua = navigator.userAgent || '';
