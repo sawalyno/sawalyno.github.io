@@ -20,7 +20,8 @@
     （"listed": false のアプリはサポート系ページだけ作り、会社サイトの一覧には出さない）
   - サポート・PP・規約の本文          → apps/{id}/support/*.html の <main> の中だけ
   - アプリの LP（広告の着地ページ）     → apps/{id}/index.html と apps/{id}/lp/ を手で書く。
-    build.py は中身を触らず、lp/*.css・lp/*.js の ?v= の付け替えとサイトマップ掲載だけ行う
+    build.py は中身を触らず、lp/*.css・lp/*.js の ?v= の付け替えとサイトマップ掲載だけ行う。
+    LP があるアプリは、会社サイトの一覧でストアのバッジの代わりに「紹介ページを見る」ボタンを出す
 それ以外（index.html の apps:begin 〜 apps:end、各ページの <main> の外側）は
 次の実行で上書きされる。
 """
@@ -169,7 +170,21 @@ def build_icons(apps: list, check: bool) -> list:
 
 
 # ---------------------------------------------------------------- company site: app list
+def has_lp(app: dict) -> bool:
+    return (ROOT / "apps" / app["id"] / "index.html").exists()
+
+
 def render_store_links(app: dict) -> list:
+    # LP（apps/{id}/index.html）があるアプリは、ストアのバッジの代わりに紹介ページへのボタン 1 つにする。
+    # ストアへは LP から（端末に合うストアを先に出し、PostHog で数えられる）。?src=site で会社サイトからの流入と分かる
+    if has_lp(app):
+        return [
+            f'<a class="btn-lp" href="/apps/{app["id"]}/?src=site" target="_blank" rel="noopener">'
+            '<svg class="btn-lp__icon" aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" '
+            'stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>'
+            '<path d="M14 2v6h6"/><path d="M8 13h8"/><path d="M8 17h5"/></svg>'
+            '<span class="btn-lp__text"><span class="btn-lp__sub">紹介ページで</span><span class="btn-lp__main">くわしく見る</span></span></a>'
+        ]
     rows = []
     if app.get("google_play"):
         url = "https://play.google.com/store/apps/details?id=" + app["google_play"]

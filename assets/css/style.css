@@ -360,6 +360,21 @@ html.js .term.is-intro .term-form { visibility: hidden; }
 }
 .btn-bevel:hover { background: linear-gradient(180deg, #4a4a5c 0%, #28283a 100%); border-color: #6a6a80; }
 .btn-bevel:active { background: linear-gradient(180deg, #1e1e2c 0%, #2a2a3c 100%); box-shadow: inset 0 1px 3px rgba(0,0,0,0.5); }
+/* LP があるアプリの「紹介ページで くわしく見る」。ストアのバッジと同じ言葉づかい
+   （黒地・細い灰色の枠・角丸 7px・高さ 44px・小さい上段＋太い下段）で、他のアプリの行と並べても浮かないようにする */
+.btn-lp {
+  display: inline-flex; align-items: center; gap: 10px;
+  height: 44px; padding: 0 16px 0 12px;
+  color: #fff; text-decoration: none;
+  background: #000;
+  border: 1px solid #a6a6a6; border-radius: 7px;
+  transition: border-color .15s ease;
+}
+.btn-lp:hover { color: #fff; border-color: #fff; }
+.btn-lp__icon { flex: none; color: var(--term-green); }
+.btn-lp__text { display: flex; flex-direction: column; line-height: 1.15; font-family: var(--font-jp); }
+.btn-lp__sub { font-size: 10px; color: #d0d0d6; letter-spacing: .02em; }
+.btn-lp__main { font-size: 16px; font-weight: 700; letter-spacing: .02em; }
 .btn-soon {
   display: inline-flex; align-items: center;
   min-height: 44px; padding: 0 14px;
