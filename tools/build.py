@@ -381,6 +381,62 @@ def build_lp_pages(apps: list) -> dict:
     return result
 
 
+LP_PP_HEADING = "紹介ページ（ウェブサイト）でのアクセス解析"
+
+
+def check_lp(app: dict) -> list:
+    """LP の計測・ストアリンク・プライバシーポリシーの漏れを調べ、問題の一覧を返す（空なら OK）。
+    ひな型（もしもノートの LP）をコピーしたときのアプリ名の変え忘れ・PostHog の入れ忘れを止めるためのもの。
+    手順は app-factory の .claude/skills/lp-maker/SKILL.md"""
+    aid = app["id"]
+    base = ROOT / "apps" / aid
+    page = (base / "index.html").read_text(encoding="utf-8")
+    problems = []
+
+    def need(cond: bool, msg: str) -> None:
+        if not cond:
+            problems.append(f"apps/{aid}: {msg}")
+
+    analytics = base / "lp" / "analytics.js"
+    lpjs = base / "lp" / "lp.js"
+    need(analytics.exists(), "lp/analytics.js がない（PostHog の計測）")
+    need(lpjs.exists(), "lp/lp.js がない（ストアリンク・クリック計測）")
+    if analytics.exists():
+        a = analytics.read_text(encoding="utf-8")
+        need(re.search(rf"var APP = '{re.escape(aid)}';", a) is not None,
+             f"lp/analytics.js の APP が '{aid}' になっていない（別アプリの数字に混ざる）")
+        need(re.search(r"var POSTHOG_KEY = 'phc_[A-Za-z0-9]+';", a) is not None, "lp/analytics.js の POSTHOG_KEY が空")
+        need("cookieless_mode: 'always'" in a, "lp/analytics.js に cookieless_mode: 'always' がない（PP の「Cookie を使わない」と食い違う）")
+        need("phx_" not in re.sub(r"/\*.*?\*/", "", a, flags=re.S), "lp/analytics.js に個人 API キー（phx_）らしき文字列がある")
+    if lpjs.exists():
+        j = lpjs.read_text(encoding="utf-8")
+        need("posthog.capture('store_click'" in j, "lp/lp.js に store_click の計測がない")
+        need(re.search(r"var APPLE_PT = '\d+';", j) is not None, "lp/lp.js の APPLE_PT が空（App Store のキャンペーン集計が出ない）")
+    need(f'src="/apps/{aid}/lp/analytics.js' in page, "index.html で lp/analytics.js を読み込んでいない")
+    need(f'src="/apps/{aid}/lp/lp.js' in page, "index.html で lp/lp.js を読み込んでいない")
+    csp = re.search(r'http-equiv="Content-Security-Policy" content="([^"]*)"', page)
+    need(csp is not None, "index.html に CSP の meta がない")
+    if csp:
+        for d in ("script-src", "connect-src"):
+            m = re.search(d + r"([^;]*)", csp.group(1))
+            need(m is not None and "https://*.posthog.com" in m.group(1), f"CSP の {d} に https://*.posthog.com がない（計測がブロックされる）")
+    need("data-store=" in page, "index.html のストアボタンに data-store が付いていない（クリックを数えられない）")
+    play = app.get("google_play")
+    ios = app.get("app_store_id")
+    if play:
+        need(f"details?id={play}" in page, f"index.html に Google Play（{play}）へのリンクがない")
+    if ios:
+        need(f"id{ios}" in page, f"index.html に App Store（id{ios}）へのリンクがない")
+    else:
+        need("apps.apple.com" not in page, "App Store 未公開（app_store_id が null）なのに LP に App Store のリンクがある")
+    for other in sorted(set(re.findall(r"details\?id=([A-Za-z0-9_.]+)", page))):
+        need(other == play, f"index.html に別アプリの Google Play リンク（{other}）がある")
+    pp = base / "support" / "privacy.html"
+    need(pp.exists() and LP_PP_HEADING in pp.read_text(encoding="utf-8"),
+         f"support/privacy.html に「{LP_PP_HEADING}」の節がない（外部送信の公表）")
+    return problems
+
+
 def apply_stamps(page: str) -> str:
     for rel in ASSETS + lp_assets():
         # 改行コードをそろえてからハッシュを取る。Git が Windows で CRLF に変えても値が変わらないように
@@ -431,6 +487,9 @@ def main() -> int:
         pages[NOT_FOUND] = (nf, nf)
         pages.update(build_support_pages(apps))
         pages.update(build_lp_pages(apps))
+        lp_problems = [msg for app in apps if has_lp(app) for msg in check_lp(app)]
+        if lp_problems:
+            raise BuildError("LP に漏れがあります（.claude/skills/lp-maker/SKILL.md のチェックリスト参照）\n  - " + "\n  - ".join(lp_problems))
         pages ={p: (old, apply_stamps(new)) for p, (old, new) in pages.items()}
     except BuildError as e:
         say(f"エラー: {e}")
