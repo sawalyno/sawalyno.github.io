@@ -19,6 +19,8 @@
     （一覧は released＝初回公開日の新しい順。公開から NEW_DAYS 日は「NEW」を付ける）
     （"listed": false のアプリはサポート系ページだけ作り、会社サイトの一覧には出さない）
   - サポート・PP・規約の本文          → apps/{id}/support/*.html の <main> の中だけ
+  - アプリの LP（広告の着地ページ）     → apps/{id}/index.html と apps/{id}/lp/ を手で書く。
+    build.py は中身を触らず、lp/*.css・lp/*.js の ?v= の付け替えとサイトマップ掲載だけ行う
 それ以外（index.html の apps:begin 〜 apps:end、各ページの <main> の外側）は
 次の実行で上書きされる。
 """
@@ -348,8 +350,24 @@ def apply_font_subset(page: str, texts: list) -> str:
 
 
 # ---------------------------------------------------------------- cache stamps
+def lp_assets() -> list:
+    """アプリ LP（apps/{id}/lp/）の CSS / JS。ASSETS と同じく ?v= を付け替える"""
+    return sorted(p.relative_to(ROOT).as_posix() for ext in ("css", "js") for p in ROOT.glob(f"apps/*/lp/*.{ext}"))
+
+
+def build_lp_pages(apps: list) -> dict:
+    """アプリ LP（apps/{id}/index.html・手書き）。中身は触らず、?v= の付け替えとサイトマップ掲載だけ行う"""
+    result = {}
+    for app in apps:
+        path = ROOT / "apps" / app["id"] / "index.html"
+        if path.exists():
+            text = path.read_text(encoding="utf-8")
+            result[path] = (text, text)
+    return result
+
+
 def apply_stamps(page: str) -> str:
-    for rel in ASSETS:
+    for rel in ASSETS + lp_assets():
         # 改行コードをそろえてからハッシュを取る。Git が Windows で CRLF に変えても値が変わらないように
         digest = hashlib.sha256((ROOT / rel).read_bytes().replace(b"\r\n", b"\n")).hexdigest()[:8]
         page = re.sub(r'(/' + re.escape(rel) + r')(\?v=[^"]*)?(")', lambda m: f"{m.group(1)}?v={digest}{m.group(3)}", page)
@@ -397,7 +415,8 @@ def main() -> int:
         nf = NOT_FOUND.read_text(encoding="utf-8")
         pages[NOT_FOUND] = (nf, nf)
         pages.update(build_support_pages(apps))
-        pages = {p: (old, apply_stamps(new)) for p, (old, new) in pages.items()}
+        pages.update(build_lp_pages(apps))
+        pages ={p: (old, apply_stamps(new)) for p, (old, new) in pages.items()}
     except BuildError as e:
         say(f"エラー: {e}")
         return 2
@@ -421,7 +440,7 @@ def main() -> int:
             say("要記入が残っています（公開前に本文を書いてください）: " + ", ".join(todo))
             code = 1
         if code == 0:
-            say(f"OK: {len(apps)} 個のアプリ・{len(pages) - 2} 枚のサポート系ページ・ずれなし")
+            say(f"OK: {len(apps)} 個のアプリ・{len(pages) - 2} 枚のサポート系ページ・LP・ずれなし")
         return code
 
     for p, (old, new) in pages.items():
