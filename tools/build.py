@@ -51,6 +51,8 @@ KINDS = {
     "index": {"label": "サポート", "body": "doc-support", "href": "./"},
     "privacy": {"label": "プライバシーポリシー", "body": "doc-legal", "href": "./privacy.html"},
     "terms": {"label": "利用規約", "body": "doc-legal", "href": "./terms.html"},
+    # アプリ内から eula.html を参照しているアプリ用（aha）。ひな型は無いのでファイルがあるときだけ扱う
+    "eula": {"label": "利用規約（EULA）", "body": "doc-legal", "href": "./eula.html"},
 }
 
 REQUIRED = ("id", "name", "genre", "desc", "tagline", "color")
@@ -259,6 +261,8 @@ def kinds_for(app: dict) -> list:
     kinds = ["index", "privacy"]
     if app.get("terms") or page_path(app, "terms").exists():
         kinds.append("terms")
+    if page_path(app, "eula").exists():
+        kinds.append("eula")
     return kinds
 
 
